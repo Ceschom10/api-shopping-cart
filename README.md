@@ -3,6 +3,7 @@ Repository for a shopping cart api
 
 Es una api para poder hacer ordenes de productos con los detalles y tambien para poder realizar el pago de dicha transaccion.
 
+#NOTA IMPORTANTE DEBE DE CAMBIAR LA PALABRA USER_DATABASE POR EL DE SU BASE DE DATOS
 
 # PETICIONES DESDE POSTMAN 
 se realizan consumiendo el endpoint para poder tener el token 
@@ -20,11 +21,11 @@ http://localhost:8089/api-shopping-cart/swagger/swagger-ui/index.html#/
 
 -- DROP DATABASE IF EXISTS order_registration
 
-CREATE DATABASE order_registration WITH OWNER = "cesar" ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TABLESPACE = pg_default CONNECTION LIMIT = -1 IS_TEMPLATE = False;
+CREATE DATABASE order_registration WITH OWNER = "USER_DATABASE" ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TABLESPACE = pg_default CONNECTION LIMIT = -1 IS_TEMPLATE = False;
 
 GRANT TEMPORARY, CONNECT ON DATABASE order_registration TO PUBLIC;
 
-GRANT ALL ON DATABASE order_registration TO "cesar";
+GRANT ALL ON DATABASE order_registration TO "USER_DATABASE";
 
 
 # SCRIPT CREACION DE LA BASE DE SCHEMA
@@ -32,11 +33,11 @@ GRANT ALL ON DATABASE order_registration TO "cesar";
 
 -- DROP SCHEMA IF EXISTS sch_orders ;
 
-CREATE SCHEMA IF NOT EXISTS sch_orders AUTHORIZATION "cesar";
+CREATE SCHEMA IF NOT EXISTS sch_orders AUTHORIZATION "USER_DATABASE";
 
-GRANT ALL ON SCHEMA sch_orders TO "cesar";
+GRANT ALL ON SCHEMA sch_orders TO "USER_DATABASE";
 
-ALTER DEFAULT PRIVILEGES FOR ROLE cesar IN SCHEMA sch_orders GRANT INSERT, SELECT, UPDATE, DELETE, REFERENCES, TRIGGER ON TABLES TO "cesar";
+ALTER DEFAULT PRIVILEGES FOR ROLE USER_DATABASE IN SCHEMA sch_orders GRANT INSERT, SELECT, UPDATE, DELETE, REFERENCES, TRIGGER ON TABLES TO "USER_DATABASE";
 
 
 # SCRIPT CREACION DE LA TABLA ORDER EN EL SCHEMA SCH_ORDERS
@@ -54,7 +55,7 @@ CREATE TABLE IF NOT EXISTS sch_orders.order(
     payment_method varchar(50),
     payment_status varchar(50),
     total numeric);
-ALTER TABLE IF EXISTS sch_orders.order OWNER to "cesar";
+ALTER TABLE IF EXISTS sch_orders.order OWNER to "USER_DATABASE";
 
 # SCRIPT CREACION DE LA TABLA ORDER_DETAILS EN EL SCHEMA SCH_ORDERS
 
@@ -73,7 +74,7 @@ CREATE TABLE IF NOT EXISTS sch_orders.order_details (
     CONSTRAINT order_details_fk_1 FOREIGN KEY (id_order) 
     REFERENCES sch_orders.order (id_order) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION )
 TABLESPACE pg_default;
-ALTER TABLE IF EXISTS sch_orders.order_details OWNER to "cesar";
+ALTER TABLE IF EXISTS sch_orders.order_details OWNER to "USER_DATABASE";
 
 # SCRIPT CREACION DE LA TABLA PAYMENT EN EL SCHEMA SCH_ORDERS
 CREATE TABLE payment (
@@ -88,7 +89,7 @@ CREATE TABLE payment (
     CONSTRAINT order_fk_1 FOREIGN KEY (id_order) 
     REFERENCES sch_orders.order (id_order) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );   
-ALTER TABLE IF EXISTS sch_orders.payment OWNER to "cesar";
+ALTER TABLE IF EXISTS sch_orders.payment OWNER to "USER_DATABASE";
 -- Se actualiza la zona horaria de la base de datos
 SET TIME ZONE 'America/El_Salvador';
 
