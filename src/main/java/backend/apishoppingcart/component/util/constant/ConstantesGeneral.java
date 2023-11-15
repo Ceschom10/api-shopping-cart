@@ -1,10 +1,5 @@
 package backend.apishoppingcart.component.util.constant;
 
-/** Metodo main
- * @author Cesar Amaya
- * @version 1.0
- * @since 23/05/2023
-*/
 public class ConstantesGeneral {
 
 	private ConstantesGeneral(){

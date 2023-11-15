@@ -23,11 +23,6 @@ import backend.apishoppingcart.component.util.log.LogUtil.TYPELOG;
 import backend.apishoppingcart.dto.exception.ErrorDto;
 import backend.apishoppingcart.dto.exception.ResponseErrorDto;
 
-/** GenericException controller advicer.
- * @author Cesar Amaya
- * @version 1.0
- * @since 23/05/2023
-*/
 @ControllerAdvice
 public class GenericExceptionHandler extends ResponseEntityExceptionHandler {
     
@@ -39,43 +34,18 @@ public class GenericExceptionHandler extends ResponseEntityExceptionHandler {
         this.log = new LogUtilImpl(GenericExceptionHandler.class);
     }
 
-    /** 
-     * Manejo de excepciones genericas
-     * 
-     * @param ex Excepcion Personalizada
-     * @param request Peticion inicial del metodo
-     * @return ResponseEntity{@literal <}Object{@literal >} Respuesta generica de Spring Boot
-     */
     @ExceptionHandler(GenericException.class)
     public final ResponseEntity<Object> 
         handleCustomException(GenericException ex, WebRequest request) {        
         return handlerGenericException(ex, request, ex.getBaseError());
     }
 
-    
-    /** 
-     * Manego de excepciones personalizadas
-     * 
-     * @param ex Excepcion generica
-     * @param request Peticion inicial del metodo
-     * @param baseError Excepcion base
-     * @return ResponseEntity{@literal <}Object{@literal >} Respuesta generica de Sprin Boot
-     */
     private final ResponseEntity<Object> 
         handlerGenericException(GenericException ex, WebRequest request, ErrorDto baseError) {
 
         return customResponseFromException(ex, request, baseError);
     }
 
-    
-    /** 
-     * Custom response de manejo de excepciones personalizadas
-     * 
-     * @param ex Excepcion generica
-     * @param request Peticion inicial del metodo
-     * @param baseError Excepcion base
-     * @return ResponseEntity{@literal <}Object{@literal >} Respuesta generica de Sprin Boot
-     */
     private ResponseEntity<Object> 
     customResponseFromException(GenericException ex, 
         WebRequest request,  ErrorDto baseError) {   
@@ -92,14 +62,6 @@ public class GenericExceptionHandler extends ResponseEntityExceptionHandler {
             baseError.getHttpHeaders(),baseError.getHttpStatus());
     }
 
-    
-    /** 
-     * Manejo de excepciones no controladas
-     * 
-     * @param ex Excepcion generica
-     * @param request Peticion inicial del metodo
-     * @return ResponseEntity{@literal <}Object{@literal >} Respuesta generica de Sprin Boot
-     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> exception(GenericException ex, WebRequest request) {
         var baseError = ErrorDto.builder()
@@ -110,16 +72,6 @@ public class GenericExceptionHandler extends ResponseEntityExceptionHandler {
         return customResponseFromException(ex, request, baseError);
     }
 
-    
-    /** 
-     * Manejo de excepciones de bad request
-     * 
-     * @param ex Excepcion generica
-     * @param headers headers que se agregan a la respuesta de excepcion
-     * @param status httpStatus que se agregan a la respuesta de excepcion
-     * @param request Peticion inicial del metodo
-     * @return ResponseEntity{@literal <}Object{@literal >} Respuesta generica de Sprin Boot
-     */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
     MethodArgumentNotValidException ex, 
@@ -145,14 +97,6 @@ public class GenericExceptionHandler extends ResponseEntityExceptionHandler {
         return customResponseFromException(apiError,request,apiError.getBaseError());
     }
 
-    
-    /** 
-     * Obtiene mensajes de las properties
-     * 
-     * @param messageCode codigo de mensaje del messages.properties
-     * @param locale idioma para buscar en el message properties
-     * @return String retorna el mensaje
-     */
     private String getMessage(String messageCode, Locale locale) {
         String message;
         

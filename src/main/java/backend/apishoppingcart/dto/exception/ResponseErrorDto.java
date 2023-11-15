@@ -12,12 +12,6 @@ import org.springframework.http.HttpStatus;
 import lombok.Builder;
 import lombok.Getter;
 
-/**Respuesta generica de exepciones
- * @author Javier Vanegas
- * @author Banco Cuscatlan
- * @version 1.0
- * @since 18/01/2022
-*/
 @Builder
 @Getter
 public class ResponseErrorDto implements Serializable {

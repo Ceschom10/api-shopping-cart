@@ -13,12 +13,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 
-/**Respuesta generica de exepciones
- * @author Javier Vanegas
- * @author Banco Cuscatlan
- * @version 1.0
- * @since 18/01/2022
-*/
 @Builder
 @Getter
 public class ResponseErrorTwoDto implements Serializable {

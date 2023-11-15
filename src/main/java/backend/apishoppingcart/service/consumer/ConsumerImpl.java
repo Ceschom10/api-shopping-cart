@@ -24,13 +24,6 @@ import io.netty.handler.timeout.WriteTimeoutException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/** WebFlux para consumo de servicios
- * @author Javier Vanegas
- * @author Banco Cuscatlan
- * @version 2.0
- * @param <T>
- * @since 19/07/2022
-*/
 @Service
 public class ConsumerImpl<T> implements Consumer {
 	
@@ -47,10 +40,6 @@ public class ConsumerImpl<T> implements Consumer {
     }
 
     
-    /** 
-     * @param baseUrl url base
-     * @return WebClient
-     */
     public WebClient initializer(String baseUrl){ 
 
         Map<String,String> headerHelper = getDefaultHeaders();          
@@ -62,14 +51,7 @@ public class ConsumerImpl<T> implements Consumer {
         }).build();
     }
 
-    
-    /** 
-     * @param request generic request
-     * @param baseUrl url base
-     * @param url sufijo de la url
-     * @param response clase generica que va retornar
-     * @return Mono{@literal <}T{@literal >}
-     */
+   
     public <W,T> Mono<T> postOneByBody(W request, String baseUrl, String url, Class<T> response){
         
         WebClient client = initializer(baseUrl);
@@ -89,14 +71,7 @@ public class ConsumerImpl<T> implements Consumer {
             .doOnError(WriteTimeoutException.class, ex -> log.write(TYPELOG.ERROR, "TimeOutError", ex));
         
     }
-   
-    /** 
-     * @param request generic request
-     * @param baseUrl url base
-     * @param url sufijo de la url
-     * @param response clase generica que va retornar
-     * @return Flux{@literal <}T{@literal >}
-     */
+  
     public <W,T> Flux<T> postAnyByBody(W request, String baseUrl, String url, Class<T> response){
         WebClient client = initializer(baseUrl);
         return client.post().uri(url)
@@ -107,14 +82,6 @@ public class ConsumerImpl<T> implements Consumer {
     }
 
 
-    
-    /** 
-     * @param request generic request
-     * @param baseUrl url base
-     * @param url sufijo de la url
-     * @param response clase generica que va retornar
-     * @return Mono{@literal <}T{@literal >}
-     */
     public <T> Mono<T> getOneByQueryString(MultiValueMap<String,String> request, String baseUrl, String url, Class<T> response){
         
         WebClient client = initializer(baseUrl);
@@ -126,14 +93,7 @@ public class ConsumerImpl<T> implements Consumer {
             ).retrieve().bodyToMono(response);
     }
 
-    
-    /** 
-     * @param request generic request
-     * @param baseUrl url base
-     * @param url sufijo de la url
-     * @param response clase generica que va retornar
-     * @return Flux{@literal <}T{@literal >}
-     */
+ 
     public <T> Flux<T> getAnyByQueryString(MultiValueMap<String,String> request, String baseUrl, String url, Class<T> response){
         WebClient client = initializer(baseUrl);
         return client.get().uri(uriBuilder -> 
@@ -145,14 +105,7 @@ public class ConsumerImpl<T> implements Consumer {
             .bodyToFlux(response);
     }
 
-    
-    /** 
-     * @param baseUrl url base
-     * @param url sujijo de la url
-     * @param response clase generia que se retorna
-     * @param arguments argumentos genericos 
-     * @return Mono{@literal <}T{@literal >}
-     */
+ 
     public <T> Mono<T> getOneByPathParameter(String baseUrl, String url, Class<T> response, Object... arguments){
         
         WebClient client = initializer(baseUrl);
@@ -176,14 +129,6 @@ public class ConsumerImpl<T> implements Consumer {
             .doOnError(WriteTimeoutException.class, ex -> log.write(TYPELOG.ERROR, "TimeOutError", ex));
     }
 
-    
-    /** 
-     * @param baseUrl url base
-     * @param url sujijo de la url
-     * @param response clase generia que se retorna
-     * @param arguments argumentos genericos 
-     * @return Flux{@literal <}T{@literal >}
-     */
     public <T> Flux<T> getAnyByPathParameter(String baseUrl, String url, Class<T> response, Object... arguments){
         WebClient client = initializer(baseUrl);
         return client.get().uri(uriBuilder -> 
@@ -194,10 +139,6 @@ public class ConsumerImpl<T> implements Consumer {
             .bodyToFlux(response);
     }
 
-    
-    /** 
-     * @param headers seteo de encabezado de peticion
-     */
     public void setDefaultHeaders(Map<String,String> headers){
         this.headers = headers;
     }
@@ -217,14 +158,6 @@ public class ConsumerImpl<T> implements Consumer {
             return headers;
     }
 
-    
-    /** 
-     * @param request generic request
-     * @param baseUrl url base
-     * @param url sufijo de la url
-     * @param response clase generica que va retornar
-     * @return Mono{@literal <}T{@literal >}
-     */
     @Override
     public <T> Mono<T> postOneByFormBody(MultiValueMap<String,String> request, String baseUrl, String url, Class<T> response) {
         WebClient client = initializer(baseUrl);

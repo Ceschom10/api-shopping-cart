@@ -8,11 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-/** Interfaz de generic logs
-  * @author Cesar Amaya
- * @version 1.0
- * @since 23/05/2023
-*/
 @Component
 public class LogUtilImpl implements LogUtil {
     
@@ -26,13 +21,6 @@ public class LogUtilImpl implements LogUtil {
         log = LoggerFactory.getLogger(name);
     }
 
-    
-    /** 
-     * @param typeLog tipo de log que se desea ingresar
-     * @param message mensaje que se requiere escribir
-     * @param arguments objeto que se convertira a JSON en el LOG
-     * @return boolean retorna true si se escribio con exito
-     */
     public boolean write(TYPELOG typeLog, String message, Object... arguments) {
         ObjectMapper mapper = new ObjectMapper();
         

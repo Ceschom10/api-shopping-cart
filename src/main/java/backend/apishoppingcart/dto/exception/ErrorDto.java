@@ -8,12 +8,6 @@ import org.springframework.http.HttpStatus;
 import lombok.Builder;
 import lombok.Getter;
 
-/**objeto base para la tarnsferencia en controller advice
- * @author Javier Vanegas
- * @author Banco Cuscatlan
- * @version 1.0
- * @since 18/01/2022
-*/
 @Getter
 @Builder
 public class ErrorDto implements Serializable {
